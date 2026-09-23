@@ -1,0 +1,175 @@
+{
+  "project_info": {
+    "name": "NADI (Navigasi Data Bisnis)",
+    "tagline": "Catat transaksi. Pahami data. Ambil keputusan lebih cerdas.",
+    "target_audience": "UMKM Indonesia (Warung kopi/kedai, toko kelontong/retail, usaha makanan/kuliner, bisnis rumahan)",
+    "language": "Indonesian throughout UI",
+    "theme_archetype": "Organic Earthy + Swiss Precision (Clean SaaS dengan aksen warna khas Indonesia: Putih + Hijau Nusantara + Emas Warm)",
+    "app_type": "hybrid_fullstack_saas"
+  },
+  "color_palette": {
+    "mode": "Light-first with warm modern SaaS aesthetic",
+    "primary": {
+      "hex": "#0F5132",
+      "tailwind": "emerald-800",
+      "description": "Hijau Nusantara - Signifies prosperity, freshness, and sustainable local business growth"
+    },
+    "primary_hover": {
+      "hex": "#064E3B",
+      "tailwind": "emerald-900"
+    },
+    "secondary_gold": {
+      "hex": "#D97706",
+      "tailwind": "amber-600",
+      "description": "Emas Panen Warm Gold - Used for key highlights, AI recommendations, profit indicators, and badges"
+    },
+    "secondary_gold_light": {
+      "hex": "#FEF3C7",
+      "tailwind": "amber-100"
+    },
+    "background": {
+      "hex": "#FAF9F5",
+      "tailwind": "stone-50",
+      "description": "Warm bone white / soft warm canvas"
+    },
+    "card_surface": {
+      "hex": "#FFFFFF",
+      "tailwind": "bg-white border-stone-200/80 shadow-sm"
+    },
+    "text": {
+      "main": "#1C1917",
+      "muted": "#78716C",
+      "inverted": "#FFFFFF"
+    },
+    "status_colors": {
+      "success": "#16A34A",
+      "warning_stock": "#EAB308",
+      "danger_low": "#DC2626",
+      "info_ai": "#2563EB"
+    }
+  },
+  "typography": {
+    "heading_font": "Plus Jakarta Sans, sans-serif",
+    "body_font": "Plus Jakarta Sans, sans-serif",
+    "mono_font": "JetBrains Mono, monospace (for Rp / monetary totals & transaction numbers)",
+    "hierarchy": {
+      "h1": "text-3xl sm:text-4xl font-bold tracking-tight text-stone-900",
+      "h2": "text-xl sm:text-2xl font-bold text-stone-900",
+      "h3": "text-lg font-semibold text-stone-800",
+      "body": "text-sm sm:text-base text-stone-700 leading-relaxed",
+      "caption": "text-xs font-medium text-stone-500 uppercase tracking-wider"
+    }
+  },
+  "navigation": {
+    "labels_indonesian": [
+      { "id": "dashboard", "label": "Dashboard", "icon": "LayoutDashboard" },
+      { "id": "transaksi", "label": "Transaksi", "icon": "ShoppingCart" },
+      { "id": "produk", "label": "Produk & Stok", "icon": "Package" },
+      { "id": "analitik", "label": "Analitik", "icon": "BarChart3" },
+      { "id": "nadi_insight", "label": "NADI Insight", "icon": "Sparkles", "badge": "AI" },
+      { "id": "laporan", "label": "Laporan", "icon": "FileText" },
+      { "id": "profil", "label": "Profil", "icon": "Store" }
+    ],
+    "header_bar": "Sticky glassmorphism header (bg-white/80 backdrop-blur-md border-b border-stone-200/70 z-40) with business switcher, quick POS button, and AI alert icon",
+    "mobile_nav": "Bottom fixed navigation bar with touch-friendly targets for quick mobile cashiering"
+  },
+  "page_architecture": {
+    "Login_Register": {
+      "route": "/login",
+      "components": [
+        "Brand Hero Banner with value proposition 'Catat transaksi. Pahami data. Ambil keputusan lebih cerdas.'",
+        "Business Category Selector (Kuliner / Warkop, Retail & Kelontong, Fashion, Jasa, Lainnya)",
+        "Quick Switch Demo Mode button ('Masuk Mode Demo Kedai Kopi Nadi')"
+      ]
+    },
+    "Dashboard": {
+      "route": "/",
+      "components": [
+        "Ringkasan Hari Ini KPI Grid (Omzet Hari Ini, Est. Keuntungan Bersih, Jumlah Transaksi, Produk Terlaris)",
+        "Grafik Penjualan 7 Hari (Recharts Line/Area Chart showing daily revenue vs estimated profit)",
+        "AI Insights Carousel / Highlight Banner ('Rekomendasi NADI')",
+        "Peringatan Stok Menipis (Low stock alert cards with quick reorder action button)",
+        "Transaksi Terakhir (Recent sales list with instant detail drawer)"
+      ]
+    },
+    "Transaksi_POS": {
+      "route": "/transaksi",
+      "components": [
+        "POS Cashier Layout: Left grid category filter & product tiles with photos + stock count",
+        "Right Order Cart Panel: Item list, quantity modifier, discount input, payment method selector (Tunai, QRIS, Transfer), and big 'Proses Pembayaran' CTA button",
+        "Struk Digital / Modal Struk Cetak after checkout complete"
+      ]
+    },
+    "Produk_Stok": {
+      "route": "/produk",
+      "components": [
+        "Product CRUD Table & Grid view switcher",
+        "Category tabs (Minuman, Makanan, Biji Kopi, Snacking, Bahan Baku)",
+        "Low stock highlight filter & Quick Add Product Modal with HPP (Harga Pokok) & Harga Jual auto-margin calculation"
+      ]
+    },
+    "Analitik": {
+      "route": "/analitik",
+      "components": [
+        "Tren Pendapatan & Profitability Area Chart",
+        "Analisis Waktu Ramai (Peak sales day & hour bar chart)",
+        "Kontribusi Kategori Produk (Donut / Pie Chart)",
+        "Peringkat Produk Terlaris & Margin Tertinggi Table"
+      ]
+    },
+    "NADI_Insight": {
+      "route": "/insight",
+      "components": [
+        "Asisten NADI Interactive AI Advisor Chat & Card Feed",
+        "Kartu Rekomendasi Strategis (E.g. 'Bundling Paket Hemat Kopi + Roti', 'Penyesuaian Stok Biji Kopi Arabika', 'Promo Jam Sepi')",
+        "Tombol 'Terapkan Rekomendasi' for direct automated promo or stock order action"
+      ]
+    },
+    "Laporan": {
+      "route": "/laporan",
+      "components": [
+        "Filter Periode (Harian, Mingguan, Bulanan, Custom)",
+        "Laporan Laba Rugi Sederhana (Revenue - COGS - Expenses = Net Profit)",
+        "Download / Print PDF Export Preview"
+      ]
+    },
+    "Profil_Pengaturan": {
+      "route": "/profil",
+      "components": [
+        "Informasi Usaha (Nama Kedai, Alamat, Logo, Kategori UMKM)",
+        "Pengaturan Struk (Catatan Kaki Struk, Header QRIS)",
+        "Manajemen Staf / Kasir"
+      ]
+    }
+  },
+  "sample_data": {
+    "business_name": "Warkop Kopi Nadi Nusantara",
+    "category": "Kuliner & Kedai Kopi",
+    "owner": "Budi Santoso",
+    "location": "Jakarta Selatan",
+    "products": [
+      { "id": "p1", "name": "Es Kopi Susu Aren Nadi", "category": "Minuman", "price": 18000, "hpp": 7500, "stock": 42, "unit": "cup", "image": "https://images.pexels.com/photos/35889831/pexels-photo-35889831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+      { "id": "p2", "name": "Americano Single Origin", "category": "Minuman", "price": 15000, "hpp": 5000, "stock": 8, "unit": "cup", "image": "https://images.unsplash.com/photo-1665730472047-f58a4db4a737?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHw0fHxpbmRvbmVzaWFuJTIwY29mZmVlJTIwc2hvcCUyMGJhcmlzdGElMjB3YXJ1bmclMjBrb3BpJTIwcHJvZHVjdHxlbnwwfHx8fDE3ODk1MzEzMTB8MA&ixlib=rb-4.1.0&q=85" },
+      { "id": "p3", "name": "Roti Bakar Cokelat Keju", "category": "Makanan", "price": 16000, "hpp": 6500, "stock": 15, "unit": "porsi", "image": "https://images.unsplash.com/photo-1599549192669-6baac5d32432?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwxfHxpbmRvbmVzaWFuJTIwY29mZmVlJTIwc2hvcCUyMGJhcmlzdGElMjB3YXJ1bmclMjBrb3BpJTIwcHJvZHVjdHxlbnwwfHx8fDE3ODk1MzEzMTB8MA&ixlib=rb-4.1.0&q=85" },
+      { "id": "p4", "name": "Cireng Bumbu Rujak", "category": "Makanan", "price": 12000, "hpp": 4000, "stock": 5, "unit": "porsi", "image": "https://images.unsplash.com/photo-1599548713969-3460f26dc07e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwyfHxpbmRvbmVzaWFuJTIwY29mZmVlJTIwc2hvcCUyMGJhcmlzdGElMjB3YXJ1bmclMjBrb3BpJTIwcHJvZHVjdHxlbnwwfHx8fDE3ODk1MzEzMTB8MA&ixlib=rb-4.1.0&q=85" }
+    ]
+  },
+  "media": {
+    "hero_barista": "https://images.unsplash.com/photo-1665119497578-7750afbc684c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHszfHxpbmRvbmVzaWFuJTIwY29mZmVlJTIwc2hvcCUyMGJhcmlzdGElMjB3YXJ1bmclMjBrb3BpJTIwcHJvZHVjdHxlbnwwfHx8fDE3ODk1MzEzMTB8MA&ixlib=rb-4.1.0&q=85",
+    "product_iced_coffee": "https://images.pexels.com/photos/35889831/pexels-photo-35889831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "product_pour_over": "https://images.unsplash.com/photo-1665730472047-f58a4db4a737?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHw0fHxpbmRvbmVzaWFuJTIwY29mZmVlJTIwc2hvcCUyMGJhcmlzdGElMjB3YXJ1bmclMjBrb3BpJTIwcHJvZHVjdHxlbnwwfHx8fDE3ODk1MzEzMTB8MA&ixlib=rb-4.1.0&q=85",
+    "barista_team": "https://images.unsplash.com/photo-1599549192669-6baac5d32432?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwxfHxpbmRvbmVzaWFuJTIwY29mZmVlJTIwc2hvcCUyMGJhcmlzdGElMjB3YXJ1bmclMjBrb3BpJTIwcHJvZHVjdHxlbnwwfHx8fDE3ODk1MzEzMTB8MA&ixlib=rb-4.1.0&q=85"
+  },
+  "testing_and_accessibility": {
+    "data_testid_convention": "kebab-case, role-based, e.g., data-testid='nav-dashboard-link', data-testid='pos-add-to-cart-btn-p1', data-testid='ai-insight-card-1', data-testid='transaction-checkout-btn'",
+    "contrast_wcag": "All text elements maintain minimum 4.5:1 ratio against warm stone-50 background or white card backgrounds",
+    "interactive_states": "Hover, focus, active, and disabled states MUST explicitly define text colors and background transitions"
+  },
+  "instructions_to_main_agent": [
+    "Build a complete, responsive, startup-competition-worthy frontend application prototype for NADI.",
+    "Ensure all 8 requested pages/tabs are accessible via navigation and functional.",
+    "Incorporate real state management so users can add products, record transactions, see real-time chart updates, and interact with the AI NADI recommendations.",
+    "Use Lucide icons, Recharts for analytics, Framer Motion for smooth tab and toast interactions, and Sonner for toasts.",
+    "Maintain Indonesian language throughout every single UI component, label, error message, and AI text."
+  ]
+}
