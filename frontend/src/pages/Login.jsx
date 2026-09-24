@@ -4,11 +4,11 @@ import { toast } from "sonner";
 import { Sparkles, TrendingUp, Package, ChartLine } from "lucide-react";
 
 const CATEGORIES = [
-  "Kuliner & Kedai Kopi",
-  "Retail & Kelontong",
+  "Kuliner",
+  "Retail",
   "Fashion",
   "Jasa",
-  "Bisnis Rumahan",
+  "Toko Kelontong",
   "Lainnya",
 ];
 
@@ -48,8 +48,8 @@ export default function Login() {
     setForm({
       email: "",
       password: "",
-      owner_name: "Rifa Zaki",
-      business_name: "Warkop Kopi Nadi Nusantara",
+      owner_name: "Kiasen",
+      business_name: "Warung Madura",
       business_category: "",
       phone: "081234567890",
     });
@@ -78,7 +78,7 @@ export default function Login() {
             <span className="text-amber-400">Ambil keputusan lebih cerdas.</span>
           </h1>
           <p className="text-lg opacity-80 max-w-md">
-            Asisten bisnis digital untuk UMKM Indonesia. Dari warung kopi hingga toko kelontong.
+            Asisten bisnis digital untuk berbagai jenis usaha.
           </p>
 
           <div className="grid grid-cols-2 gap-4 mt-8 max-w-md">
@@ -86,7 +86,7 @@ export default function Login() {
               { icon: TrendingUp, t: "Analitik Sederhana" },
               { icon: Sparkles, t: "Rekomendasi AI" },
               { icon: Package, t: "Kelola Stok" },
-              { icon: ChartLine, t: "Laporan Otomatis" },
+              { icon: ChartLine, t: "Laporan Bisnis Otomatis" },
             ].map((f) => (
               <div key={f.t} className="flex items-center gap-2.5 text-sm">
                 <div className="h-8 w-8 rounded-lg bg-white/10 grid place-items-center">
@@ -98,7 +98,7 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="relative z-10 text-xs opacity-60">© 2026 NADI · Untuk UMKM Indonesia</div>
+        <div className="relative z-10 text-xs opacity-60">© 2026 NADI · Untuk berbagai jenis usaha</div>
       </div>
 
       {/* Right: Form */}
@@ -113,10 +113,10 @@ export default function Login() {
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-1">
-            {mode === "login" ? "Masuk ke NADI" : "Daftarkan UMKM Anda"}
+            {mode === "login" ? "Masuk ke NADI" : "Daftarkan usaha Anda"}
           </h2>
           <p className="text-stone-500 mb-6 text-sm">
-            {mode === "login" ? "Kelola bisnis Anda dengan lebih cerdas" : "Gratis untuk memulai. Tanpa kartu kredit."}
+            {mode === "login" ? "Kelola bisnis Anda dengan lebih cerdas" : "Gratis untuk memulai."}
           </p>
 
           <form onSubmit={submit} className="space-y-3">
@@ -130,7 +130,7 @@ export default function Login() {
                     value={form.owner_name}
                     onChange={(e) => setForm({ ...form, owner_name: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white text-sm focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 outline-none"
-                    placeholder="cth. Rifa Zaki"
+                    placeholder="contoh. Rifa Zaki Aufa"
                   />
                 </div>
                 <div>
@@ -141,7 +141,7 @@ export default function Login() {
                     value={form.business_name}
                     onChange={(e) => setForm({ ...form, business_name: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white text-sm focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 outline-none"
-                    placeholder="cth. Warkop Kopi Nusantara"
+                    placeholder="contoh. Warung Madura"
                   />
                 </div>
                 <div>
@@ -180,7 +180,7 @@ export default function Login() {
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white text-sm focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/10 outline-none"
-                placeholder="••••••••"
+                placeholder=""
               />
             </div>
 

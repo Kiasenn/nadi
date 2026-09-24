@@ -4,7 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
 import { Store, Crown, Save } from "lucide-react";
 
-const CATEGORIES = ["Kuliner & Kedai Kopi", "Retail & Kelontong", "Fashion", "Jasa", "Bisnis Rumahan", "Lainnya"];
+const CATEGORIES = ["Kuliner", "Retail", "Fashion", "Jasa", "Kelontong", "Lainnya"];
 
 export default function Profil() {
   const { user, refreshUser } = useAuth();
@@ -14,7 +14,7 @@ export default function Profil() {
     owner_name: user?.owner_name || "",
     phone: user?.phone || "",
     address: user?.address || "",
-    operating_hours: user?.operating_hours || "08:00 - 22:00",
+    operating_hours: user?.operating_hours || "10:00 - 23:00",
   });
   const [saving, setSaving] = useState(false);
 
@@ -80,11 +80,11 @@ export default function Profil() {
           </div>
           <div className="md:col-span-2">
             <label className="text-xs font-medium text-stone-600 block mb-1">Alamat Usaha</label>
-            <input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="w-full px-3 py-2.5 rounded-lg border border-stone-300 text-sm" placeholder="Jl. Contoh No. 1, Jakarta" />
+            <input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="w-full px-3 py-2.5 rounded-lg border border-stone-300 text-sm" placeholder="Contoh. Jl. Magelang No. 1" />
           </div>
           <div>
             <label className="text-xs font-medium text-stone-600 block mb-1">Jam Operasional</label>
-            <input value={form.operating_hours} onChange={(e) => setForm({ ...form, operating_hours: e.target.value })} className="w-full px-3 py-2.5 rounded-lg border border-stone-300 text-sm" placeholder="08:00 - 22:00" />
+            <input value={form.operating_hours} onChange={(e) => setForm({ ...form, operating_hours: e.target.value })} className="w-full px-3 py-2.5 rounded-lg border border-stone-300 text-sm" placeholder="10:00 - 23:00" />
           </div>
           <div>
             <label className="text-xs font-medium text-stone-600 block mb-1">Email</label>
@@ -99,8 +99,8 @@ export default function Profil() {
       <div className="grid md:grid-cols-3 gap-4">
         {[
           { name: "Starter", price: "Gratis", features: ["POS Kasir", "Hingga 50 produk", "Laporan dasar"], current: user?.subscription_plan === "Starter" },
-          { name: "Growth", price: "Rp99rb/bln", features: ["Semua fitur Starter", "AI Insight Unlimited", "Produk tanpa batas", "Laporan lengkap"], current: user?.subscription_plan === "Growth", popular: true },
-          { name: "Business", price: "Rp249rb/bln", features: ["Semua fitur Growth", "Multi cabang", "API akses", "Priority support"], current: user?.subscription_plan === "Business" },
+          { name: "Growth", price: "Rp60rb/bln", features: ["Semua fitur Starter", "AI Insight Unlimited", "Produk tanpa batas", "Laporan lengkap"], current: user?.subscription_plan === "Growth", popular: true },
+          { name: "Business", price: "Rp150rb/bln", features: ["Semua fitur Growth", "Multi cabang", "API akses", "Priority support"], current: user?.subscription_plan === "Business" },
         ].map((plan) => (
           <div key={plan.name} className={`rounded-2xl border p-5 ${plan.popular ? "border-amber-500 bg-amber-50/40 ring-2 ring-amber-500/20" : "border-stone-200 bg-white"}`}>
             {plan.popular && <div className="text-[10px] font-bold text-amber-700 uppercase tracking-widest mb-2">Paling Populer</div>}

@@ -1,0 +1,7 @@
+pyproject.toml
+server.py
+nadi_backend.egg-info/PKG-INFO
+nadi_backend.egg-info/SOURCES.txt
+nadi_backend.egg-info/dependency_links.txt
+nadi_backend.egg-info/requires.txt
+nadi_backend.egg-info/top_level.txt

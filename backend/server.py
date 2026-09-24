@@ -522,9 +522,9 @@ async def get_insights(current=Depends(get_current_user)):
             chat = LlmChat(
                 api_key=EMERGENT_LLM_KEY,
                 session_id=f"nadi-{current['id']}",
-                system_message="Kamu adalah NADI, asisten bisnis cerdas untuk UMKM Indonesia. Berikan rekomendasi bisnis dalam Bahasa Indonesia yang santai, singkat (maksimal 4 poin bullet), praktis, dan mudah dipahami pemilik warung. Gunakan tone hangat dan positif."
+                system_message="Kamu adalah NADI, asisten bisnis cerdas untuk berbagai jenis usaha. Berikan rekomendasi bisnis dalam Bahasa Indonesia yang santai, singkat (maksimal 4 poin bullet), praktis, dan mudah dipahami pemilik warung. Gunakan tone hangat dan positif."
             ).with_model("anthropic", "claude-sonnet-5")
-            msg = UserMessage(text=f"Berdasarkan data kedai '{current.get('business_name', 'UMKM')}' 14 hari terakhir: {summary_data}. Berikan 3-4 rekomendasi strategis yang bisa langsung diterapkan.")
+            msg = UserMessage(text=f"Berdasarkan data kedai '{current.get('business_name', 'usaha')}' 14 hari terakhir: {summary_data}. Berikan 3-4 rekomendasi strategis yang bisa langsung diterapkan.")
             ai_summary = await chat.send_message(msg)
         except Exception as e:
             logging.warning(f"AI insight fallback: {e}")

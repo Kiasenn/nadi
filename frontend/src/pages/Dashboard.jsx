@@ -28,17 +28,31 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [insights, setInsights] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const load = async () => {
-    try {
-      const { data } = await api.get("/dashboard/summary");
-      setData(data);
-    } catch (e) {
-      toast.error("Gagal memuat data");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const [dashboardRes, transactionsRes, productsRes, insightsRes] = await Promise.all([
+      api.get("/dashboard/summary"),
+      api.get("/transactions"),
+      api.get("/products"),
+      api.get("/insights")
+    ]);
+
+    setData(dashboardRes.data);
+    setTransactions(transactionsRes.data);
+    setProducts(productsRes.data);
+    setInsights(insightsRes.data?.insights || []);
+    
+  } catch (e) {
+    toast.error("Gagal memuat data");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => { load(); }, []);
 
@@ -69,17 +83,203 @@ const dashboardData = data || {
 
 const isEmpty = !dashboardData.chart_7d.some(d => d.revenue > 0);
 
+const keyword = searchTerm.toLowerCase().trim();
+
+const filteredProducts = products.filter((p) =>
+  `${p.name || ""} ${p.category || ""} ${p.unit || ""}`
+    .toLowerCase()
+    .includes(keyword)
+);
+
+const filteredTransactions = transactions.filter((t) =>
+  `${t.payment_method || ""} ${t.note || ""} ${t.total || ""} ${
+    t.created_at || ""
+  } ${t.items
+    ?.map((item) => `${item.name || ""} ${item.category || ""}`)
+    .join(" ")}`
+    .toLowerCase()
+    .includes(keyword)
+);
+
+const filteredInsights = insights.filter((i) =>
+  `${i.title || ""} ${i.message || ""} ${i.action || ""}`
+    .toLowerCase()
+    .includes(keyword)
+);
+
+const featureResults = [
+  { name: "Dashboard", path: "/" },
+  { name: "Produk", path: "/produk" },
+  { name: "Transaksi", path: "/transaksi" },
+  { name: "Analitik", path: "/analitik" },
+  { name: "Laporan", path: "/laporan" },
+  { name: "Insight", path: "/insight" },
+  { name: "Profil", path: "/profil" },
+].filter((item) =>
+  item.name.toLowerCase().includes(keyword)
+);
+
   return (
     <div className="space-y-6" data-testid="dashboard-page">
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
+        <div className="w-full">
           <div className="text-sm text-stone-500">Selamat datang kembali,</div>
           <h1 className="text-2xl sm:text-3xl font-bold text-stone-900" data-testid="dashboard-greeting">
             {user?.owner_name} 👋
           </h1>
           <div className="text-sm text-stone-600 mt-0.5">{user?.business_name}</div>
-        </div>
+
+          <div className="mt-4 w-full relative">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Cari produk atau transaksi..."
+              className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-sm text-stone-900 placeholder:text-stone-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700"
+            />
+
+            {searchTerm.trim() && (
+              <div className="absolute z-20 mt-2 w-full bg-white rounded-xl border border-stone-200 shadow-lg overflow-hidden">
+
+                {filteredProducts.length > 0 && (
+                  <div>
+                    <div className="px-4 py-2 bg-stone-50 text-xs font-semibold uppercase tracking-wider text-stone-500">
+                      Produk
+                    </div>
+
+                    <div className="divide-y divide-stone-100">
+                      {filteredProducts.slice(0, 5).map((p) => (
+                        <button
+                          key={p.id}
+                          onClick={() => navigate("/produk")}
+                          className="w-full text-left px-4 py-3 hover:bg-stone-50"
+                        >
+                          <div className="text-sm font-medium text-stone-900">
+                            {p.name}
+                          </div>
+                          <div className="text-xs text-stone-500 mt-1">
+                            {p.category} · Stok {p.stock} {p.unit}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {filteredProducts.length > 5 && (
+                      <button
+                        onClick={() => navigate("/produk")}
+                        className="w-full px-4 py-2 text-xs text-emerald-800 font-medium hover:bg-stone-50 border-t border-stone-100"
+                      >
+                        Lihat {filteredProducts.length} produk lainnya
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {filteredTransactions.length > 0 && (
+                  <div>
+                    <div className="px-4 py-2 bg-stone-50 text-xs font-semibold uppercase tracking-wider text-stone-500">
+                      Transaksi
+                    </div>
+
+                    <div className="divide-y divide-stone-100">
+                      {filteredTransactions.slice(0, 5).map((t) => (
+                        <button
+                          key={t.id}
+                          onClick={() => navigate("/transaksi")}
+                          className="w-full text-left px-4 py-3 hover:bg-stone-50"
+                        >
+                          <div className="text-sm font-medium text-stone-900 truncate">
+                            {t.items?.map((i) => `${i.name} x${i.quantity}`).join(", ")}
+                          </div>
+
+                          <div className="text-xs text-stone-500 mt-1">
+                            {formatDateTime(t.created_at)} · {t.payment_method}
+                          </div>
+
+                          <div className="text-sm font-bold text-stone-900 font-mono-num mt-1">
+                            {formatRp(t.total)}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {filteredTransactions.length > 5 && (
+                      <button
+                        onClick={() => navigate("/transaksi")}
+                        className="w-full px-4 py-2 text-xs text-emerald-800 font-medium hover:bg-stone-50 border-t border-stone-100"
+                      >
+                        Lihat {filteredTransactions.length} transaksi lainnya
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {filteredInsights.length > 0 && (
+                  <div>
+                    <div className="px-4 py-2 bg-stone-50 text-xs font-semibold uppercase tracking-wider text-stone-500">
+                      Insight
+                    </div>
+
+                    <div className="divide-y divide-stone-100">
+                      {filteredInsights.slice(0, 3).map((i, index) => (
+                        <button
+                          key={index}
+                          onClick={() => navigate("/insight")}
+                          className="w-full text-left px-4 py-3 hover:bg-stone-50"
+                        >
+                          <div className="text-sm font-medium text-stone-900">
+                            {i.title}
+                          </div>
+
+                          <div className="text-xs text-stone-500 mt-1 line-clamp-2">
+                            {i.message}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {featureResults.length > 0 && (
+                  <div>
+                    <div className="px-4 py-2 bg-stone-50 text-xs font-semibold uppercase tracking-wider text-stone-500">
+                      Fitur NADI
+                    </div>
+
+                    <div className="divide-y divide-stone-100">
+                      {featureResults.map((item) => (
+                        <button
+                          key={item.path}
+                          onClick={() => navigate(item.path)}
+                          className="w-full text-left px-4 py-3 hover:bg-stone-50"
+                        >
+                          <div className="text-sm font-medium text-stone-900">
+                            {item.name}
+                          </div>
+
+                          <div className="text-xs text-stone-500">
+                            Buka fitur {item.name}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {filteredProducts.length === 0 &&
+                  filteredTransactions.length === 0 &&
+                  filteredInsights.length === 0 &&
+                  featureResults.length === 0 && (
+                    <div className="px-4 py-6 text-center text-sm text-stone-500">
+                      Tidak ada hasil untuk "{searchTerm}".
+                    </div>
+                  )}
+
+              </div>
+            )}
+          </div>
+
         {isEmpty && (
           <button
             onClick={seedDemo}
@@ -92,6 +292,7 @@ const isEmpty = !dashboardData.chart_7d.some(d => d.revenue > 0);
           </button>
         )}
       </div>
+    </div>
 
       {/* KPI Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -192,28 +393,58 @@ const isEmpty = !dashboardData.chart_7d.some(d => d.revenue > 0);
 
       {/* Recent Transactions */}
       <div className="bg-white rounded-2xl border border-stone-200/80 shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-stone-200 flex justify-between items-center">
-          <h3 className="font-semibold text-stone-900">Transaksi Terbaru</h3>
-          <button onClick={() => navigate("/transaksi")} className="text-sm text-emerald-800 font-medium hover:underline">Lihat semua</button>
+        <div className="p-5 border-b border-stone-200">
+          <div className="flex flex-wrap justify-between items-center gap-3">
+            <h3 className="font-semibold text-stone-900">
+              Transaksi Terbaru
+            </h3>
+
+            <button
+              onClick={() => navigate("/transaksi")}
+              className="text-sm text-emerald-800 font-medium hover:underline"
+            >
+              Lihat semua
+            </button>
+          </div>
         </div>
-        {dashboardData.recent_transactions.length === 0 ? (
-          <div className="p-8 text-center text-stone-500 text-sm">Belum ada transaksi.</div>
+
+        <div className="px-5 py-2 text-xs text-stone-500">
+          Hasil pencarian: {filteredTransactions.length}
+        </div>
+
+        {filteredTransactions.length === 0 ? (
+          <div className="p-8 text-center text-stone-500 text-sm">
+            {searchTerm
+              ? `Tidak ada transaksi untuk "${searchTerm}".`
+              : "Belum ada transaksi."}
+          </div>
         ) : (
           <div className="divide-y divide-stone-100">
-            {dashboardData.recent_transactions.map((t) => (
-              <div key={t.id} className="p-4 flex items-center justify-between hover:bg-stone-50">
+            {filteredTransactions.map((t) => (
+              <div
+                key={t.id}
+                className="p-4 flex items-center justify-between hover:bg-stone-50"
+              >
                 <div className="min-w-0">
-                  <div className="text-sm font-medium text-stone-900 truncate">
-                    {t.items.map(i => `${i.name} x${i.quantity}`).join(", ")}
-                  </div>
-                  <div className="text-xs text-stone-500 mt-0.5">{formatDateTime(t.created_at)} · {t.payment_method}</div>
-                </div>
-                <div className="text-sm font-bold text-stone-900 font-mono-num">{formatRp(t.total)}</div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+                 <div className="text-sm font-medium text-stone-900 truncate">
+                   {t.items
+                     .map((i) => `${i.name} x${i.quantity}`)
+                     .join(", ")}
+                 </div>
+
+                 <div className="text-xs text-stone-500 mt-0.5">
+                   {formatDateTime(t.created_at)} · {t.payment_method}
+                 </div>
+               </div>
+
+               <div className="text-sm font-bold text-stone-900 font-mono-num">
+                 {formatRp(t.total)}
+               </div>
+             </div>
+           ))}
+         </div>
+       )}
+     </div>
+   </div>
   );
 }
