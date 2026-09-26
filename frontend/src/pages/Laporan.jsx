@@ -25,7 +25,7 @@ export default function Laporan() {
       ["Laporan Penjualan", PERIODS.find(p => p.key === period)?.label],
       ["Periode (hari)", data.days],
       ["Total Omzet", data.total_revenue],
-      ["Total HPP", data.total_hpp],
+      ["Total Pengeluaran", data.total_pengeluaran],
       ["Total Keuntungan", data.total_profit],
       ["Jumlah Transaksi", data.total_trx],
       [],
@@ -90,7 +90,7 @@ export default function Laporan() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { l: "Total Omzet", v: formatRp(data.total_revenue), c: "text-emerald-800", bg: "bg-emerald-50" },
-            { l: "Total HPP", v: formatRp(data.total_hpp), c: "text-stone-700", bg: "bg-stone-50" },
+            { l: "Total Pengeluaran", v: formatRp(data.total_pengeluaran), c: "text-stone-700", bg: "bg-stone-50" },
             { l: "Keuntungan Bersih", v: formatRp(data.total_profit), c: "text-amber-700", bg: "bg-amber-50" },
             { l: "Transaksi", v: data.total_trx, c: "text-blue-700", bg: "bg-blue-50" },
           ].map((k, i) => (
@@ -109,8 +109,8 @@ export default function Laporan() {
               <span className="font-mono-num font-semibold">{formatRp(data.total_revenue)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-stone-600">(-) Harga Pokok Penjualan</span>
-              <span className="font-mono-num text-red-600">-{formatRp(data.total_hpp)}</span>
+              <span className="text-stone-600">(-) Harga Pengeluaran</span>
+              <span className="font-mono-num text-red-600">-{formatRp(data.total_pengeluaran)}</span>
             </div>
             <div className="flex justify-between border-t border-stone-300 pt-2 font-bold">
               <span>Laba Bersih</span>
