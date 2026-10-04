@@ -109,7 +109,7 @@ export default function Laporan() {
               <span className="font-mono-num font-semibold">{formatRp(data.total_revenue)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-stone-600">(-) Harga Pengeluaran</span>
+              <span className="text-stone-600">(-) Total Pengeluaran</span>
               <span className="font-mono-num text-red-600">-{formatRp(data.total_pengeluaran)}</span>
             </div>
             <div className="flex justify-between border-t border-stone-300 pt-2 font-bold">
