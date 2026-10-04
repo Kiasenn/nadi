@@ -46,12 +46,12 @@ export default function Login() {
   const demoFill = () => {
     setMode("register");
     setForm({
-      email: "",
-      password: "",
+      email: "josjis@usaha.com",
+      password: "kopijosjis",
       owner_name: "Kiasen",
-      business_name: "Warung Madura",
-      business_category: "",
-      phone: "081234567890",
+      business_name: "Kedai Kopi Josjis",
+      business_category: "Kuliner",
+      phone: "08123456789",
     });
   };
 
