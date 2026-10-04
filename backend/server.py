@@ -435,7 +435,7 @@ async def reports(period: str = "daily", current=Depends(get_current_user)):
         "period": period,
         "days": d,
         "total_revenue": revenue,
-        "total_hpp": hpp,
+        "total_pengeluaran": hpp,
         "total_profit": profit,
         "total_trx": len(trxs),
         "products": products,
