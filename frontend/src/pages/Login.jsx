@@ -212,7 +212,7 @@ export default function Login() {
               data-testid="demo-fill-btn"
               className="mt-6 w-full py-2.5 rounded-lg border border-amber-500/50 bg-amber-50 text-amber-800 text-sm font-medium hover:bg-amber-100 transition-colors"
             >
-              ✨ Isi otomatis Demo Kedai Kopi Nadi
+              ✨ Isi otomatis Demo Kiasen
             </button>
           )}
         </div>
